@@ -1,0 +1,216 @@
+#! /bin/bash
+
+SCRIPT_HOME=$(dirname $(realpath $0))
+INST_HOME="/opt/aurora/test-suite"
+JMTR_HOME="$SCRIPT_HOME/jmetersrv"
+COMPOSE_FILE="$SCRIPT_HOME/docker-compose.yml"
+DOCKER_COMPOSE_PROJECT_NAME="aurora_relayer"
+
+network="testnet"
+
+beginswith() { case "$2" in "$1"*) true;; *) false;; esac; }
+
+checkinstall() {
+    if [ ! -f "$SCRIPT_HOME/.installed" ]; then
+        echo "Testsuite is not installed..."
+        exit 1
+    fi
+
+    if [ ! -f "$SCRIPT_HOME/jmetersrv/conf/secrets.properties" ]; then
+        echo "Missing config file $SCRIPT_HOME/jmetersrv/conf/secrets.properties"
+        exit 1
+    else
+        while read config || [ -n "$config" ]; do
+            if [ ! -z "$config" ] && [ "$config" != " " ] && ! beginswith "#" "$config"; then
+                key=$(echo $config | cut -d '=' -f1)
+                value=$(echo $config | cut -d '=' -f2-)
+                if [ -z "$key" -o "$key" = " " -o -z "$value" -o "$value" = " " ] || [ -z "${value##*:*}" ]; then
+                    echo "Invalid config [$key=$value] in $SCRIPT_HOME/jmetersrv/conf/secrets.properties"
+                    exit 1
+                fi
+            fi
+        done < "$SCRIPT_HOME/jmetersrv/conf/secrets.properties"
+    fi
+}
+
+install() {
+    if [ -f "$SCRIPT_HOME/.installed" ]; then
+        echo "Already installed..."
+        exit 1
+    fi
+
+    mkdir -p "$JMTR_HOME/lib/js"
+    mkdir -p "$JMTR_HOME/lib/go"
+    mkdir -p "$SCRIPT_HOME/results"
+    mkdir -p "$SCRIPT_HOME/prometheus/data"
+
+    wd=$(pwd)
+    cd "$JMTR_HOME/lib/js/ethers"
+    npm install ethers@^5.6.8
+    cd $wd
+
+    docker_compose_cmd pull --ignore-pull-failures 2> /dev/null
+    docker_compose_cmd build
+    touch "$SCRIPT_HOME/.installed"
+}
+
+uninstall() {
+    sudo rm -rf "$JMTR_HOME/lib/js/ethers/node_modules" > /dev/null 2>&1
+    sudo rm "$JMTR_HOME/lib/js/ethers/package-lock.json" > /dev/null 2>&1
+
+    sudo rm "$INST_HOME/lib" > /dev/null 2>&1
+    sudo rm "$INST_HOME/conf" > /dev/null 2>&1
+    sudo rm "$INST_HOME/tests" > /dev/null 2>&1
+
+    sudo rm "$SCRIPT_HOME/aurora-relayer-jmeter-tests.tgz" > /dev/null 2>&1
+    sudo rm -rf "$SCRIPT_HOME/results" > /dev/null 2>&1
+    sudo rm -rf "$SCRIPT_HOME/prometheus/data" > /dev/null 2>&1
+
+    sudo docker container rm -f $(sudo docker-compose -p $DOCKER_COMPOSE_PROJECT_NAME -f $COMPOSE_FILE ps --services) 2>&1
+    sudo docker network rm $(sudo docker network ls | grep $DOCKER_COMPOSE_PROJECT_NAME | cut -d " " -f 1) > /dev/null 2>&1
+    sudo docker-compose -p $DOCKER_COMPOSE_PROJECT_NAME -f "$COMPOSE_FILE_ORIG" rm -s -f -v > /dev/null 2>&1
+
+    rm "$SCRIPT_HOME/.installed"
+}
+
+update() {
+    if [ ! -d "$SCRIPT_HOME/prometheus/data" ]; then
+        mkdir "$SCRIPT_HOME/prometheus/data"
+    fi
+    cusergroup=$(stat -c "%u:%g" "$SCRIPT_HOME/prometheus/data")
+    if [ "x$cusergroup" != "x1001:1001" ]; then
+        sudo chown -R "1001:1001" "$SCRIPT_HOME/prometheus/data"
+    fi
+    docker_compose_cmd rm -s -f -v $@
+    docker_compose_cmd up -d --build --remove-orphans $@
+}
+
+develop() {
+    while getopts ":n:" opt; do
+        case "${opt}" in
+            n)
+                network="${OPTARG}"
+                ;;
+            \?)
+                echo "Invalid develop option: -$OPTARG${NC}" 1>&2
+                usage
+                exit 1
+                ;;
+            :)
+                echo "Invalid develop option: -$OPTARG requires an argument${NC}" 1>&2
+                usage
+                exit 1
+                ;;
+        esac
+    done
+    shift $((OPTIND-1))
+
+    if [ "x$JMETER_HOME" = "x" ]; then
+        echo "Development mode requires JMETER_HOME environment variable, please install Jmeter and set JMETER_HOME to installation directory"
+        exit 1
+    fi
+
+    if [ ! -d "$INST_HOME" ]; then
+        sudo mkdir -p $INST_HOME
+    fi
+    if [ ! -L "$INST_HOME/conf" ]; then
+        sudo ln -s $JMTR_HOME/conf $INST_HOME/conf
+    fi
+    if [ ! -L "$INST_HOME/lib" ]; then
+        sudo ln -s $JMTR_HOME/lib $INST_HOME/lib
+    fi
+    if [ ! -L "$INST_HOME/tests" ]; then
+        sudo ln -s $SCRIPT_HOME/tests $INST_HOME/tests
+    fi
+
+    echo "Starting Jmeter GUI with network=$network..."
+    $JMETER_HOME/bin/jmeter -j $JMTR_HOME/jmeter.log \
+    -q $INST_HOME/conf/common.properties \
+    -q $INST_HOME/conf/secrets.properties \
+    -q $INST_HOME/conf/$network.properties &
+}
+
+package() {
+    if [ ! -f "$SCRIPT_HOME/.installed" ]; then
+        install $@
+    fi
+    rm $SCRIPT_HOME/aurora-relayer-jmeter-tests.tgz > /dev/null 2>&1
+    tar --exclude=**/*.log --exclude=**/results/* --exclude=**/data/* --exclude=.gitignore --exclude=.tgz --exclude=**/.git -zcf $SCRIPT_HOME/aurora-relayer-jmeter-tests.tgz $SCRIPT_HOME/../aurora-relayer-jmeter-tests > /dev/null
+}
+
+status() {
+    for i in $(docker_compose_cmd ps --services); do
+        echo "$i $(sudo docker container inspect -f '{{.State.Status}}' $i)"
+    done
+}
+
+log() {
+    if [ "$(sudo docker container inspect -f '{{.State.Status}}' jmetersrv )" == "running" ]; then
+        sudo tail -f $(sudo docker container inspect jmetersrv | grep LogPath | cut -d'"' -f4)
+    fi
+}
+
+usage() {
+    echo "Usage: $(basename "$0") {COMMAND [-option]}"
+    echo -e "\nCommands:" \
+    "\n start\t\t\tStarts services which are stopped" \
+    "\n stop\t\t\tStops running services" \
+    "\n restart\t\tRestarts running services" \
+    "\n install\t\tDownloads dependencies and installs test suite" \
+    "\n uninstall\t\tUninstalls test suite" \
+    "\n package\t\tInstalls test suite and also create a distribution package" \
+    "\n status\t\t\tShows the status of Test Suite services" \
+    "\n log\t\t\tPrints Jmeter logs, if Jmeter service is running" \
+    "\n develop\t[-n]\tStarts Jmeter in GUI mode for test design and development"
+    echo -e "\nOptions:" \
+    "\n -n\t<network>\ttestnet, mainnet or local. Default: testnet"
+    echo -e "\n"
+}
+
+docker_compose_cmd() {
+    if [ ! -f "$COMPOSE_FILE" ]; then
+        echo "Missing docker-compose file, exiting..."
+        exit 1
+    fi
+    sudo docker-compose -p $DOCKER_COMPOSE_PROJECT_NAME -f "$COMPOSE_FILE" $@
+}
+
+case "$1" in
+    start|stop|restart)
+        checkinstall
+        docker_compose_cmd $@ || update
+        ;;
+    update)
+        checkinstall
+        shift
+        update $@
+        ;;
+    install)
+        shift
+        install $@
+        ;;
+    uninstall)
+        shift 
+        uninstall $@
+        ;;
+    package)
+        shift
+        package $@
+        ;;
+    status)
+        shift
+        status $@
+        ;;
+    log)
+        shift
+        log
+        ;;
+    develop)
+        checkinstall
+        shift
+        develop $@
+        ;;
+    *)
+        usage
+        exit 1
+esac
