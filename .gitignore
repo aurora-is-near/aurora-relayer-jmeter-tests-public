@@ -1,0 +1,14 @@
+**/node_modules/
+**/results/
+**/data/
+**/log/*
+**/*.creds
+**/*.tar
+**/*.gz
+**/*package-lock.json
+*.installed
+*.log
+*.tgz
+
+# JetBrains IDEs
+.idea/*
