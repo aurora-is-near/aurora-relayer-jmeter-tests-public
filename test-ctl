@@ -124,10 +124,10 @@ develop() {
     fi
 
     echo "Starting Jmeter GUI with network=$network..."
-    $JMETER_HOME/bin/jmeter -j $JMTR_HOME/jmeter.log \
-    -q $INST_HOME/conf/common.properties \
-    -q $INST_HOME/conf/secrets.properties \
-    -q $INST_HOME/conf/$network.properties &
+    "$JMETER_HOME/bin/jmeter" -j "$JMTR_HOME/jmeter.log" \
+    -q "$INST_HOME/conf/common.properties" \
+    -q "$INST_HOME/conf/secrets.properties" \
+    -q "$INST_HOME/conf/$network.properties" &
 }
 
 package() {
