@@ -9,6 +9,7 @@
 *.installed
 *.log
 *.tgz
+privateKeys
 
 # JetBrains IDEs
 .idea/*
