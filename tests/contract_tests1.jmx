@@ -123,8 +123,9 @@
         <stringProp name="HTTPSampler.contentEncoding"></stringProp>
         <stringProp name="HTTPSampler.path">${user_token}</stringProp>
         <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
-        <stringProp name="HTTPSampler.connect_timeout">5000</stringProp>
-        <stringProp name="HTTPSampler.response_timeout">5000</stringProp>
+        <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+        <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+        <stringProp name="HTTPSampler.response_timeout"></stringProp>
       </ConfigTestElement>
       <hashTree/>
       <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
@@ -376,7 +377,7 @@ if (gasEstimate == null || gasEstimate == &quot;&quot; || !gasEstimate.startsWit
               <stringProp name="cacheKey">true</stringProp>
               <stringProp name="script">vars.put(&quot;path&quot;,vars.get(&quot;lib_dir&quot;)+&quot;/js/ethers/txs_contract_flare_mint.js&quot;)
 vars.put(&quot;returnVarName&quot;,&quot;txs_hash&quot;)
-vars.put(&quot;param1&quot;,vars.get(&quot;server_protocol&quot;)+&quot;://&quot;+vars.get(&quot;server_addr&quot;)+&quot;/&quot;+vars.get(&quot;user_token&quot;))
+vars.put(&quot;param1&quot;,vars.get(&quot;server_protocol&quot;)+&quot;://&quot;+vars.get(&quot;server_addr&quot;)+&quot;:&quot;+vars.get(&quot;server_port&quot;)+&quot;/&quot;+vars.get(&quot;user_token&quot;))
 vars.put(&quot;param2&quot;,vars.get(&quot;private_key_from&quot;))
 vars.put(&quot;param3&quot;,vars.get(&quot;contract_address&quot;))
 vars.put(&quot;param4&quot;,Long.toString(Long.parseLong(vars.get(&quot;txs_gas_estimate&quot;).substring(2, vars.get(&quot;txs_gas_estimate&quot;).length()),16)))
@@ -633,7 +634,7 @@ if (txs_status == null || txs_status == &quot;&quot; || txs_status == &quot;0x0&
         <stringProp name="filename"></stringProp>
       </ResultCollector>
       <hashTree/>
-      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="false">
         <boolProp name="ResultCollector.error_logging">false</boolProp>
         <objProp>
           <name>saveConfig</name>
