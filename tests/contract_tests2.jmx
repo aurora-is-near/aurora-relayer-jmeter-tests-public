@@ -1,0 +1,725 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.4.3">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="${test_name}" enabled="true">
+      <stringProp name="TestPlan.comments"></stringProp>
+      <boolProp name="TestPlan.functional_mode">true</boolProp>
+      <boolProp name="TestPlan.tearDown_on_shutdown">true</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">true</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments">
+          <elementProp name="server_protocol" elementType="Argument">
+            <stringProp name="Argument.name">server_protocol</stringProp>
+            <stringProp name="Argument.value">${__P(server_protocol,https)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="server_addr" elementType="Argument">
+            <stringProp name="Argument.name">server_addr</stringProp>
+            <stringProp name="Argument.value">${__P(server_addr,testnet.aurora.dev)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="server_port" elementType="Argument">
+            <stringProp name="Argument.name">server_port</stringProp>
+            <stringProp name="Argument.value">${__P(server_port,443)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="user_token" elementType="Argument">
+            <stringProp name="Argument.name">user_token</stringProp>
+            <stringProp name="Argument.value">${__P(user_token)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="num_of_threads" elementType="Argument">
+            <stringProp name="Argument.name">num_of_threads</stringProp>
+            <stringProp name="Argument.value">${__P(num_of_threads,100)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="ramp_up_period" elementType="Argument">
+            <stringProp name="Argument.name">ramp_up_period</stringProp>
+            <stringProp name="Argument.value">${__P(ramp_up_period_s,1)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="num_of_loop_count" elementType="Argument">
+            <stringProp name="Argument.name">num_of_loop_count</stringProp>
+            <stringProp name="Argument.value">${__P(num_of_loop_count,1)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="chain_id" elementType="Argument">
+            <stringProp name="Argument.name">chain_id</stringProp>
+            <stringProp name="Argument.value">${__P(chain_id,1313161555)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="private_key_from" elementType="Argument">
+            <stringProp name="Argument.name">private_key_from</stringProp>
+            <stringProp name="Argument.value">${__P(private_key_from)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="private_key_to" elementType="Argument">
+            <stringProp name="Argument.name">private_key_to</stringProp>
+            <stringProp name="Argument.value">${__P(private_key_to)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="protocol_version" elementType="Argument">
+            <stringProp name="Argument.name">protocol_version</stringProp>
+            <stringProp name="Argument.value">${__P(protocol_version,0x41)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="json_rpc_version" elementType="Argument">
+            <stringProp name="Argument.name">json_rpc_version</stringProp>
+            <stringProp name="Argument.value">${__P(json_rpc_version,2.0)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="lib_dir" elementType="Argument">
+            <stringProp name="Argument.name">lib_dir</stringProp>
+            <stringProp name="Argument.value">${__P(lib_dir,/opt/aurora/test-suite/lib)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="tests_dir" elementType="Argument">
+            <stringProp name="Argument.name">tests_dir</stringProp>
+            <stringProp name="Argument.value">${__P(tests_dir,/opt/aurora/test-suite/tests)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="rpc" elementType="Argument">
+            <stringProp name="Argument.name">rpc</stringProp>
+            <stringProp name="Argument.value">${__P(rpc,all)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="contract_address" elementType="Argument">
+            <stringProp name="Argument.name">contract_address</stringProp>
+            <stringProp name="Argument.value">${__P(contract_address,0xcc79355fc5de285e27cb0acc6bfaabd4af075968)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="test_name" elementType="Argument">
+            <stringProp name="Argument.name">test_name</stringProp>
+            <stringProp name="Argument.value">${__P(test_name,ContractTest2)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="prometheus_scrape_interval" elementType="Argument">
+            <stringProp name="Argument.name">prometheus_scrape_interval</stringProp>
+            <stringProp name="Argument.value">${__P(prometheus_scrape_interval,20000)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="mint_amount" elementType="Argument">
+            <stringProp name="Argument.name">mint_amount</stringProp>
+            <stringProp name="Argument.value">${__P(mint_amount,1)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="private_keys_file" elementType="Argument">
+            <stringProp name="Argument.name">private_keys_file</stringProp>
+            <stringProp name="Argument.value">${__P(private_keys_file,/opt/aurora/test-suite/tests/privateKeys)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="concurrent_txs" elementType="Argument">
+            <stringProp name="Argument.name">concurrent_txs</stringProp>
+            <stringProp name="Argument.value">${__P(concurrent_txs,1)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="delay_between_txs_ms" elementType="Argument">
+            <stringProp name="Argument.name">delay_between_txs_ms</stringProp>
+            <stringProp name="Argument.value">${__P(delay_between_txs_ms,10)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+        </collectionProp>
+      </elementProp>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+    </TestPlan>
+    <hashTree>
+      <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="HTTP Request Defaults" enabled="true">
+        <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+          <collectionProp name="Arguments.arguments"/>
+        </elementProp>
+        <stringProp name="HTTPSampler.domain">${server_addr}</stringProp>
+        <stringProp name="HTTPSampler.port">${server_port}</stringProp>
+        <stringProp name="HTTPSampler.protocol">${server_protocol}</stringProp>
+        <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+        <stringProp name="HTTPSampler.path">${user_token}</stringProp>
+        <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+        <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+        <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+        <stringProp name="HTTPSampler.response_timeout"></stringProp>
+      </ConfigTestElement>
+      <hashTree/>
+      <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+        <collectionProp name="HeaderManager.headers">
+          <elementProp name="" elementType="Header">
+            <stringProp name="Header.name">accept-encoding</stringProp>
+            <stringProp name="Header.value">gzip, deflate</stringProp>
+          </elementProp>
+          <elementProp name="" elementType="Header">
+            <stringProp name="Header.name">content-type</stringProp>
+            <stringProp name="Header.value">application/json</stringProp>
+          </elementProp>
+        </collectionProp>
+      </HeaderManager>
+      <hashTree/>
+      <SetupThreadGroup guiclass="SetupThreadGroupGui" testclass="SetupThreadGroup" testname="setUp TG" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">stoptestnow</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">1</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+      </SetupThreadGroup>
+      <hashTree>
+        <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Setup EOAs" enabled="true"/>
+        <hashTree>
+          <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="Set Args" enabled="true">
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="script">vars.put(&quot;path&quot;,vars.get(&quot;lib_dir&quot;)+&quot;/js/ethers/create_EOAs.js&quot;)
+vars.put(&quot;returnVarName&quot;,&quot;private_keys&quot;)
+vars.put(&quot;param1&quot;,vars.get(&quot;num_of_threads&quot;))
+vars.put(&quot;param2&quot;,vars.get(&quot;private_keys_file&quot;))
+
+log.info(&quot;Contract Call - path: &quot; + vars.get(&quot;path&quot;))
+log.info(&quot;Contract Call - returnVarName: &quot; + vars.get(&quot;returnVarName&quot;))
+log.info(&quot;Contract Call - param1: &quot; + vars.get(&quot;param1&quot;))
+log.info(&quot;Contract Call - param2: &quot; + vars.get(&quot;param2&quot;))</stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+          </JSR223PreProcessor>
+          <hashTree/>
+          <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Call Node" enabled="true">
+            <stringProp name="TestPlan.comments">signs the transaction and returns the raw value in the provided variable</stringProp>
+            <stringProp name="IncludeController.includepath">/opt/aurora/test-suite/tests/fragments/tf_1_callNode.js.jmx</stringProp>
+          </IncludeController>
+          <hashTree/>
+        </hashTree>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="Set Private Keys" enabled="true">
+          <stringProp name="scriptLanguage">groovy</stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="script">props.put(&quot;private_keys&quot;,vars.get(&quot;private_keys&quot;));
+SampleResult.setIgnore()</stringProp>
+        </JSR223Sampler>
+        <hashTree/>
+      </hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="${test_name}-TG" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">stopthread</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">${num_of_loop_count}</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">${num_of_threads}</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">${ramp_up_period_s}</stringProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+      </ThreadGroup>
+      <hashTree>
+        <CounterConfig guiclass="CounterConfigGui" testclass="CounterConfig" testname="Request Counter" enabled="true">
+          <stringProp name="CounterConfig.start">1</stringProp>
+          <stringProp name="CounterConfig.end"></stringProp>
+          <stringProp name="CounterConfig.incr">1</stringProp>
+          <stringProp name="CounterConfig.name">request_counter</stringProp>
+          <stringProp name="CounterConfig.format"></stringProp>
+          <boolProp name="CounterConfig.per_user">true</boolProp>
+        </CounterConfig>
+        <hashTree/>
+        <OnceOnlyController guiclass="OnceOnlyControllerGui" testclass="OnceOnlyController" testname="Once Only Controller" enabled="true"/>
+        <hashTree>
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="Set Private Key" enabled="true">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">String privateKeys = props.get(&quot;private_keys&quot;)
+Long numOfThreads = Long.valueOf(vars.get(&quot;num_of_threads&quot;))
+
+List&lt;String&gt; privateKeysList
+if (privateKeys == null || privateKeys == &quot;&quot;) {
+	SampleResult.setSuccessful(false)
+} else {
+	privateKeysList = privateKeys.tokenize(&apos;,&apos;)
+	if (privateKeysList.size() != numOfThreads) {
+		SampleResult.setSuccessful(false)	
+	} else {
+		vars.put(&quot;private_key_from&quot;, privateKeysList.toArray()[ctx.getThreadNum()])
+		SampleResult.setIgnore()
+	}
+}
+</stringProp>
+          </JSR223Sampler>
+          <hashTree/>
+          <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Set From Address" enabled="true">
+            <stringProp name="TestPlan.comments">sets the wallet address to txs_from_addr variable using the private_key_from variable</stringProp>
+            <stringProp name="IncludeController.includepath">/opt/aurora/test-suite/tests/fragments/tfc_1_setFromAddress.jmx</stringProp>
+          </IncludeController>
+          <hashTree/>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Retrieve Gas Price" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&quot;jsonrpc&quot;:&quot;${json_rpc_version}&quot;,&quot;method&quot;:&quot;eth_gasPrice&quot;,&quot;params&quot;:[],&quot;id&quot;:${request_counter}}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path"></stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract gasPrice" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">txs_gas_price</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$.result</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Msg Assertion" enabled="false">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="-586548451">&quot;id&quot;:${request_counter}</stringProp>
+                <stringProp name="-501368013">&quot;result&quot;:&quot;0x</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">16</intProp>
+              <stringProp name="Assertion.scope">all</stringProp>
+            </ResponseAssertion>
+            <hashTree/>
+            <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="Ignore on success" enabled="true">
+              <stringProp name="scriptLanguage">groovy</stringProp>
+              <stringProp name="parameters"></stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="cacheKey">true</stringProp>
+              <stringProp name="script">String gasPrice = vars.get(&quot;txs_gas_price&quot;)
+if (gasPrice == null || gasPrice == &quot;&quot; || !gasPrice.startsWith(&quot;0x&quot;)) {
+	prev.setSuccessful(false)
+} else {
+	prev.setIgnore()
+}
+</stringProp>
+            </JSR223PostProcessor>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Retrieve Gas Estimation" enabled="false">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&quot;jsonrpc&quot;:&quot;${json_rpc_version}&quot;,&quot;method&quot;:&quot;eth_estimateGas&quot;,&quot;params&quot;:[{&quot;from&quot;:&quot;${txs_from_addr}&quot;, &quot;to&quot;:&quot;${contract_address}&quot;},&quot;latest&quot;],&quot;id&quot;:${request_counter}}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path"></stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract estimateGas" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">txs_gas_estimate</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$.result</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Msg Assertion" enabled="false">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="-586548451">&quot;id&quot;:${request_counter}</stringProp>
+                <stringProp name="-501368013">&quot;result&quot;:&quot;0x</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">16</intProp>
+              <stringProp name="Assertion.scope">all</stringProp>
+            </ResponseAssertion>
+            <hashTree/>
+            <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="Ignore on success" enabled="true">
+              <stringProp name="scriptLanguage">groovy</stringProp>
+              <stringProp name="parameters"></stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="cacheKey">true</stringProp>
+              <stringProp name="script">String gasEstimate = vars.get(&quot;txs_gas_estimate&quot;)
+if (gasEstimate == null || gasEstimate == &quot;&quot; || !gasEstimate.startsWith(&quot;0x&quot;)) {
+	prev.setSuccessful(false)
+} else {
+	prev.setIgnore()
+}
+</stringProp>
+            </JSR223PostProcessor>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Retrieve Transaction Count" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&quot;jsonrpc&quot;:&quot;${json_rpc_version}&quot;,&quot;method&quot;:&quot;eth_getTransactionCount&quot;,&quot;params&quot;:[&quot;${txs_from_addr}&quot;, &quot;latest&quot;],&quot;id&quot;:${request_counter}}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path"></stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract nonce" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">txs_nonce</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$.result</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Msg Assertion" enabled="false">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="-586548451">&quot;id&quot;:${request_counter}</stringProp>
+                <stringProp name="-501368013">&quot;result&quot;:&quot;0x</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">16</intProp>
+              <stringProp name="Assertion.scope">all</stringProp>
+            </ResponseAssertion>
+            <hashTree/>
+            <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="Ignore on success" enabled="true">
+              <stringProp name="scriptLanguage">groovy</stringProp>
+              <stringProp name="parameters"></stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="cacheKey">true</stringProp>
+              <stringProp name="script">String nonce = vars.get(&quot;txs_nonce&quot;)
+if (nonce == &quot;&quot; || !nonce.startsWith(&quot;0x&quot;)) {
+	prev.setSuccessful(false)
+} else {
+	prev.setIgnore()
+}
+</stringProp>
+            </JSR223PostProcessor>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+        <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Sign Transaction" enabled="true"/>
+        <hashTree>
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="Init transaction parameters" enabled="true">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">vars.put(&quot;path&quot;,vars.get(&quot;lib_dir&quot;)+&quot;/js/ethers/txs_sign_multiple_offline.js&quot;)
+vars.put(&quot;returnVarName&quot;,&quot;raw_transactions&quot;)
+vars.put(&quot;param1&quot;,vars.get(&quot;server_protocol&quot;)+&quot;://&quot;+vars.get(&quot;server_addr&quot;)+&quot;:&quot;+vars.get(&quot;server_port&quot;)+&quot;/&quot;+vars.get(&quot;user_token&quot;))
+vars.put(&quot;param2&quot;,vars.get(&quot;chain_id&quot;))
+vars.put(&quot;param3&quot;,vars.get(&quot;private_key_from&quot;))
+vars.put(&quot;param4&quot;,vars.get(&quot;contract_address&quot;))
+vars.put(&quot;param5&quot;, &quot;50000&quot;)
+//vars.put(&quot;param5&quot;,Long.toString(Long.parseLong(vars.get(&quot;txs_gas_estimate&quot;).substring(2, vars.get(&quot;txs_gas_estimate&quot;).length()),16)))
+vars.put(&quot;param6&quot;,Long.toString(Long.parseLong(vars.get(&quot;txs_gas_price&quot;).substring(2, vars.get(&quot;txs_gas_price&quot;).length()),16)))
+vars.put(&quot;param7&quot;,vars.get(&quot;concurrent_txs&quot;))
+vars.put(&quot;param8&quot;,vars.get(&quot;txs_nonce&quot;))
+
+log.info(&quot;Transaction params - path: &quot; + vars.get(&quot;path&quot;))
+log.info(&quot;Transaction params - returnVarName: &quot; + vars.get(&quot;returnVarName&quot;))
+log.info(&quot;Transaction params - param1: &quot; + vars.get(&quot;param1&quot;))
+log.info(&quot;Transaction params - param2: ***&quot; + vars.get(&quot;param2&quot;))
+log.info(&quot;Transaction params - param3: &quot; + vars.get(&quot;param3&quot;))
+log.info(&quot;Transaction params - param4: &quot; + vars.get(&quot;param4&quot;))
+log.info(&quot;Transaction params - param5: &quot; + vars.get(&quot;param5&quot;))
+log.info(&quot;Transaction params - param6: &quot; + vars.get(&quot;param6&quot;))
+log.info(&quot;Transaction params - param7: &quot; + vars.get(&quot;param7&quot;))
+log.info(&quot;Transaction params - param8: &quot; + vars.get(&quot;param8&quot;))
+
+SampleResult.setIgnore()</stringProp>
+          </JSR223Sampler>
+          <hashTree/>
+          <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Call transaction signer" enabled="true">
+            <stringProp name="TestPlan.comments">signs the transaction and returns the raw value in the provided variable</stringProp>
+            <stringProp name="IncludeController.includepath">/opt/aurora/test-suite/tests/fragments/tf_1_callNode.js.jmx</stringProp>
+          </IncludeController>
+          <hashTree/>
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="prepare signed transactions" enabled="true">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">String rawTransactions = vars.get(&quot;raw_transactions&quot;)
+
+List&lt;String&gt; rawTransactionsList = rawTransactions.tokenize(&apos;,&apos;)
+
+log.info(&quot;Contract Call - raw_transactions: &quot; + rawTransactions)
+
+String txsKeyBase = &quot;raw_transaction_&quot;
+
+vars.putObject(&quot;loop_start&quot;, 0)
+vars.putObject(&quot;loop_end&quot;, rawTransactionsList.size()-1)
+
+for (i = 0; i &lt; rawTransactionsList.size(); i++) {
+	rawTransaction = rawTransactionsList.getAt(i)
+	vars.put(txsKeyBase + String.valueOf(i), rawTransaction) 
+}
+
+SampleResult.setIgnore()</stringProp>
+          </JSR223Sampler>
+          <hashTree/>
+        </hashTree>
+        <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Send Transaction" enabled="true"/>
+        <hashTree>
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="Init raw transactions" enabled="true">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">String rawTransactions = vars.get(&quot;raw_transactions&quot;)
+List&lt;String&gt; rawTransactionsList = rawTransactions.tokenize(&apos;,&apos;)
+
+String txsKeyBase = &quot;raw_transaction_&quot;
+
+vars.putObject(&quot;loop_start&quot;, 1)
+vars.putObject(&quot;loop_end&quot;, rawTransactionsList.size())
+
+for (int i = 0; i&lt; rawTransactionsList.size(); i++) {
+	vars.put(txsKeyBase + String.valueOf(i+1), rawTransactionsList.getAt(i))
+	log.info(&quot;put - &quot; + txsKeyBase + String.valueOf(i+1) + &quot;: &quot; + rawTransactionsList.getAt(i))
+}
+
+SampleResult.setIgnore()</stringProp>
+          </JSR223Sampler>
+          <hashTree/>
+          <ForeachController guiclass="ForeachControlPanel" testclass="ForeachController" testname="ForEach Controller" enabled="true">
+            <stringProp name="ForeachController.inputVal">raw_transaction</stringProp>
+            <stringProp name="ForeachController.returnVal">raw_transaction</stringProp>
+            <boolProp name="ForeachController.useSeparator">true</boolProp>
+            <stringProp name="ForeachController.startIndex">${loop_start}</stringProp>
+            <stringProp name="ForeachController.endIndex">${loop_end}</stringProp>
+          </ForeachController>
+          <hashTree>
+            <CounterConfig guiclass="CounterConfigGui" testclass="CounterConfig" testname="Request Counter" enabled="true">
+              <stringProp name="CounterConfig.start">0</stringProp>
+              <stringProp name="CounterConfig.end"></stringProp>
+              <stringProp name="CounterConfig.incr">1</stringProp>
+              <stringProp name="CounterConfig.name">request_counter</stringProp>
+              <stringProp name="CounterConfig.format"></stringProp>
+              <boolProp name="CounterConfig.per_user">false</boolProp>
+            </CounterConfig>
+            <hashTree/>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="eth_sendRawTransaction" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">{&quot;jsonrpc&quot;:&quot;${json_rpc_version}&quot;,&quot;method&quot;:&quot;eth_sendRawTransaction&quot;,&quot;params&quot;:[&quot;${raw_transaction}&quot;],&quot;id&quot;:${request_counter}}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain"></stringProp>
+              <stringProp name="HTTPSampler.port"></stringProp>
+              <stringProp name="HTTPSampler.protocol"></stringProp>
+              <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+              <stringProp name="HTTPSampler.path"></stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+              <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Code Assertion" enabled="true">
+                <collectionProp name="Asserion.test_strings">
+                  <stringProp name="49586">200</stringProp>
+                </collectionProp>
+                <stringProp name="Assertion.custom_message"></stringProp>
+                <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+                <boolProp name="Assertion.assume_success">false</boolProp>
+                <intProp name="Assertion.test_type">8</intProp>
+              </ResponseAssertion>
+              <hashTree/>
+              <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Msg Assertion" enabled="true">
+                <collectionProp name="Asserion.test_strings">
+                  <stringProp name="-586548451">&quot;id&quot;:${request_counter}</stringProp>
+                  <stringProp name="-501368013">&quot;result&quot;:&quot;0x</stringProp>
+                </collectionProp>
+                <stringProp name="Assertion.custom_message"></stringProp>
+                <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+                <boolProp name="Assertion.assume_success">false</boolProp>
+                <intProp name="Assertion.test_type">16</intProp>
+                <stringProp name="Assertion.scope">all</stringProp>
+              </ResponseAssertion>
+              <hashTree/>
+              <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Delay Between Transactions" enabled="true">
+                <stringProp name="ConstantTimer.delay">${delay_between_txs_ms}</stringProp>
+              </ConstantTimer>
+              <hashTree/>
+            </hashTree>
+          </hashTree>
+          <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Call transaction signer" enabled="false">
+            <stringProp name="TestPlan.comments">signs the transaction and returns the raw value in the provided variable</stringProp>
+            <stringProp name="IncludeController.includepath">/opt/aurora/test-suite/tests/fragments/tf_1_callNode.js.jmx</stringProp>
+          </IncludeController>
+          <hashTree/>
+        </hashTree>
+      </hashTree>
+      <ResultCollector guiclass="TableVisualizer" testclass="ResultCollector" testname="View Results in Table" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report" enabled="false">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <JSR223Listener guiclass="TestBeanGUI" testclass="JSR223Listener" testname="ResponseData Appender on Failure" enabled="true">
+        <stringProp name="cacheKey">true</stringProp>
+        <stringProp name="filename"></stringProp>
+        <stringProp name="parameters"></stringProp>
+        <stringProp name="script">def responseData = prev.getResponseDataAsString()
+
+sampleResult.getAssertionResults().each { assertionResult -&gt;       
+    {
+    	def tmp = assertionResult.getFailureMessage()
+    	assertionResult.setFailureMessage(tmp + &quot;\nResponse Data: &quot; +responseData)
+    }
+}</stringProp>
+        <stringProp name="scriptLanguage">groovy</stringProp>
+      </JSR223Listener>
+      <hashTree/>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>
